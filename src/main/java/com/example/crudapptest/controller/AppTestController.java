@@ -1,19 +1,25 @@
 package com.example.crudapptest.controller;
 
 import com.example.crudapptest.entity.Person;
+import com.example.crudapptest.entity.Purchase;
 import com.example.crudapptest.service.PersonService;
+import com.example.crudapptest.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.RuntimeErrorException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AppTestController {
     @Autowired
     PersonService personService;
+
+    @Autowired
+    PurchaseService purchaseService;
 
     @GetMapping("/")
     public String defaultString() {
@@ -25,7 +31,7 @@ public class AppTestController {
         return "this is test url";
     }
 
-    @GetMapping("/person/findall")
+    @GetMapping("/person/all")
     public List<Person> gtAllPersons() {
       return personService.getAllPersons();
     }
@@ -46,5 +52,26 @@ public class AppTestController {
     @GetMapping("person/deletebyname/{name}")
     public void deleteAllPersonsWithSomeName(@PathVariable String name) {
         personService.deletePersonsListByName(name);
+    }
+
+    @GetMapping("purchase/all")
+    public List<Purchase> findAllPurchases() {
+        return purchaseService.getAllPurchases();
+    }
+
+    @GetMapping("purchase/test/{id}")
+    public String createTestPurchase(
+            @PathVariable Long id
+    ) {
+        Optional<Person> optionalPerson = personService.getPersonById(id);
+        if (optionalPerson.isPresent()) {
+            Person testPerson = optionalPerson.get();
+            Long count = 3l;
+            Long price = 156l;
+            Purchase test = new Purchase(count,price, testPerson, "some present");
+            return purchaseService.addPurchaseToPerson(test).toString();
+        } else {
+            throw new RuntimeException("Person is not present");
+        }
     }
 }

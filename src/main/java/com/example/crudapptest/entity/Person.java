@@ -1,14 +1,14 @@
 package com.example.crudapptest.entity;
 
 import com.example.crudapptest.util.PersonLocation;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name="Person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,9 @@ public class Person {
     int age;
     int money;
     PersonLocation location;
+    @OneToMany(mappedBy = "person")
+    List<Purchase> purchase;
+
 
     @Override
     public String toString() {
@@ -27,6 +30,7 @@ public class Person {
                 ", age=" + age +
                 ", money=" + money +
                 ", location=" + location +
+                ", purchase=" + purchase +
                 '}';
     }
 
@@ -43,6 +47,8 @@ public class Person {
         } else {
             this.location = location;
         }
+
+        this.purchase = new ArrayList<>();
     }
 
     public void setId(Long id) {
@@ -96,5 +102,13 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public List<Purchase> getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(List<Purchase> purchase) {
+        this.purchase = purchase;
     }
 }

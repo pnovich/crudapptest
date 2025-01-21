@@ -21,7 +21,8 @@ public class PersonService {
       Person person1 = new Person("p1",20, 200,null);
       Person person2 = new Person("p2",30, 300, null);
       Person person3 = new Person("p3",50,3000, PersonLocation.USA);
-      List<Person> list = Arrays.asList(person1, person2, person3);
+      Person testPerson = new Person("test", 30,10000,PersonLocation.India);
+      List<Person> list = Arrays.asList(person1, person2, person3, testPerson);
       saveAllPersons(list);
     }
 
@@ -68,6 +69,10 @@ public class PersonService {
 
     public List<Person> findPersonsByName(String name) {
         return personRepository.findPersonByName(name);
+    }
+
+    public Optional<Person> getPersonById(Long id) {
+        return personRepository.findById(id);
     }
 
     public List<Person> getAllPersons() {
