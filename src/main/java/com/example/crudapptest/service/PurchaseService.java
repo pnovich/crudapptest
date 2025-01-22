@@ -18,6 +18,7 @@ public class PurchaseService {
     PersonService personService;
 
     public List<Purchase> getAllPurchases() {
+        System.out.println("getting all purchases");
         return purchaseRepository.findAll();
     }
 

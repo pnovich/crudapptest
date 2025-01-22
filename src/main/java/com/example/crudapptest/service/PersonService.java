@@ -76,6 +76,7 @@ public class PersonService {
     }
 
     public List<Person> getAllPersons() {
+        System.out.println("getting all persons");
         return personRepository.findAll();
     }
 
