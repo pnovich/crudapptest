@@ -26,7 +26,7 @@ public class PurchaseService {
        Optional<Person> optionalPerson = personService.getPersonById(personId);
        if (optionalPerson.isPresent()) {
            Person personFromPurchase = optionalPerson.get();
-           personFromPurchase.getPurchase().add(purchase);
+           personFromPurchase.getPurchases().add(purchase);
        } else {
            throw new RuntimeException("Person is not present");
        }

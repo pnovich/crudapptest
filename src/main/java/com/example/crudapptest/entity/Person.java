@@ -1,6 +1,7 @@
 package com.example.crudapptest.entity;
 
 import com.example.crudapptest.util.PersonLocation;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class Person {
     int money;
     PersonLocation location;
     @OneToMany(mappedBy = "person")
-    List<Purchase> purchase;
+    @JsonManagedReference
+     List<Purchase> purchases;
 
 
     @Override
@@ -30,7 +32,7 @@ public class Person {
                 ", age=" + age +
                 ", money=" + money +
                 ", location=" + location +
-                ", purchase=" + purchase +
+                ", purchase=" + purchases +
                 '}';
     }
 
@@ -48,7 +50,7 @@ public class Person {
             this.location = location;
         }
 
-        this.purchase = new ArrayList<>();
+        this.purchases = new ArrayList<>();
     }
 
     public void setId(Long id) {
@@ -104,11 +106,11 @@ public class Person {
         return Objects.hashCode(id);
     }
 
-    public List<Purchase> getPurchase() {
-        return purchase;
+    public List<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setPurchase(List<Purchase> purchase) {
-        this.purchase = purchase;
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
     }
 }
