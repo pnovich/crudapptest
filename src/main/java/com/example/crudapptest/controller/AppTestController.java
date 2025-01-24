@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.RuntimeErrorException;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +59,7 @@ public class AppTestController {
     }
 
     @GetMapping("purchase/test/{id}")
-    public String createTestPurchase(
+    public Purchase createTestPurchase(
             @PathVariable Long id
     ) {
         Optional<Person> optionalPerson = personService.getPersonById(id);
@@ -69,7 +68,8 @@ public class AppTestController {
             Long count = 3l;
             Long price = 156l;
             Purchase test = new Purchase(count,price, testPerson, "some present");
-            return purchaseService.addPurchaseToPerson(test).toString();
+            personService.addPurchaseToPerson(test);
+            return purchaseService.savePurchase(test);
         } else {
             throw new RuntimeException("Person is not present");
         }

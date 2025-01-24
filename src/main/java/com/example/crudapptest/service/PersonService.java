@@ -1,6 +1,7 @@
 package com.example.crudapptest.service;
 
 import com.example.crudapptest.entity.Person;
+import com.example.crudapptest.entity.Purchase;
 import com.example.crudapptest.repository.PersonRepository;
 import com.example.crudapptest.util.PersonLocation;
 import jakarta.annotation.PostConstruct;
@@ -23,6 +24,7 @@ public class PersonService {
       Person person3 = new Person("p3",50,3000, PersonLocation.USA);
       Person testPerson = new Person("test", 30,10000,PersonLocation.India);
       List<Person> list = Arrays.asList(person1, person2, person3, testPerson);
+      System.out.println("init mthod, saving prsons, count is " + list.size());
       saveAllPersons(list);
     }
 
@@ -82,6 +84,17 @@ public class PersonService {
 
     public List<Person> saveAllPersons(List<Person> personList) {
         return personRepository.saveAll(personList);
+    }
+
+    public void addPurchaseToPerson(Purchase purchase) {
+        Long personId = purchase.getPerson().getId();
+        Optional<Person> optionalPerson = getPersonById(personId);
+        if (optionalPerson.isPresent()) {
+            Person personFromPurchase = optionalPerson.get();
+            personFromPurchase.getPurchases().add(purchase);
+        } else {
+            throw new RuntimeException("Person is not present");
+        }
     }
 
 
