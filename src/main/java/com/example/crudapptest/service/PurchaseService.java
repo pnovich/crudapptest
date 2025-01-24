@@ -24,4 +24,23 @@ public class PurchaseService {
     public Purchase savePurchase(Purchase purchase) {
         return purchaseRepository.save(purchase);
     }
+
+    public Purchase updatePurchase(Purchase inputPurchase){
+        Long id = inputPurchase.getId();
+        Optional<Purchase> optionalPurchase = purchaseRepository.findById(id);
+        if (optionalPurchase.isPresent()) {
+            Purchase storedPurchase = optionalPurchase.get();
+            storedPurchase.setPurchaseName(inputPurchase.getPurchaseName());
+            storedPurchase.setCount(inputPurchase.getCount());
+            storedPurchase.setPrise(inputPurchase.getPrise());
+            return purchaseRepository.save(storedPurchase);
+        } else {
+            return purchaseRepository.save(inputPurchase);
+        }
+    }
+
+    public void deletePurchase(Long id) {
+        purchaseRepository.deleteById(id);
+    }
+
 }

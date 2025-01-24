@@ -1,27 +1,13 @@
 package com.example.crudapptest.controller;
 
-import com.example.crudapptest.entity.Person;
-import com.example.crudapptest.entity.Purchase;
-import com.example.crudapptest.service.PersonService;
-import com.example.crudapptest.service.PurchaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.logging.Logger;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.logging.Logger;
 
 @RestController
 public class AppTestController {
     private static final Logger log = Logger.getLogger(AppTestController.class.getName());
-    @Autowired
-    PersonService personService;
-
-    @Autowired
-    PurchaseService purchaseService;
-
     @GetMapping("/")
     public String defaultString() {
         return "app works, this is default string";
@@ -32,49 +18,4 @@ public class AppTestController {
         return "this is test url";
     }
 
-    @GetMapping("/person/all")
-    public List<Person> gtAllPersons() {
-        log.info("method to get all persons");
-      return personService.getAllPersons();
-    }
-
-    @GetMapping("/person/random")
-    public Person createRandomePerson() {
-        Person person = new Person("e",25,50,null);
-        return personService.createPerson(person);
-    }
-
-    @GetMapping("person/delete/{id}")
-    public void deleteById(@PathVariable Long id) {
-        log.info("inside delete method");
-        personService.deletePerson(id);
-        log.info("after deleting");
-    }
-
-    @GetMapping("person/deletebyname/{name}")
-    public void deleteAllPersonsWithSomeName(@PathVariable String name) {
-        personService.deletePersonsListByName(name);
-    }
-
-    @GetMapping("purchase/all")
-    public List<Purchase> findAllPurchases() {
-        return purchaseService.getAllPurchases();
-    }
-
-    @GetMapping("purchase/test/{id}")
-    public Purchase createTestPurchase(
-            @PathVariable Long id
-    ) {
-        Optional<Person> optionalPerson = personService.getPersonById(id);
-        if (optionalPerson.isPresent()) {
-            Person testPerson = optionalPerson.get();
-            Long count = 3l;
-            Long price = 156l;
-            Purchase test = new Purchase(count,price, testPerson, "some present");
-            personService.addPurchaseToPerson(test);
-            return purchaseService.savePurchase(test);
-        } else {
-            throw new RuntimeException("Person is not present");
-        }
-    }
 }
