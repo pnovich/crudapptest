@@ -12,6 +12,6 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findPersonByName(String name);
 //    @EntityGraph(attributePaths = "purchases")
-    @Query(value = "SELECT u FROM Person u join fetch u.purchases")
+    @Query(value = "SELECT u FROM Person u left join fetch u.purchases")
     List<Person> findAll();
 }
