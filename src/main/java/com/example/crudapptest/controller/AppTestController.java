@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.logging.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class AppTestController {
+    private static final Logger log = Logger.getLogger(AppTestController.class.getName());
     @Autowired
     PersonService personService;
 
@@ -32,6 +34,7 @@ public class AppTestController {
 
     @GetMapping("/person/all")
     public List<Person> gtAllPersons() {
+        log.info("method to get all persons");
       return personService.getAllPersons();
     }
 
@@ -43,9 +46,9 @@ public class AppTestController {
 
     @GetMapping("person/delete/{id}")
     public void deleteById(@PathVariable Long id) {
-        System.out.println("inside delete method");
+        log.info("inside delete method");
         personService.deletePerson(id);
-        System.out.println("after deleting");
+        log.info("after deleting");
     }
 
     @GetMapping("person/deletebyname/{name}")

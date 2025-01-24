@@ -11,9 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Component
 public class PersonService {
+    private static final Logger log = Logger.getLogger(PersonService.class.getName());
     @Autowired
     PersonRepository personRepository;
 
@@ -24,7 +26,7 @@ public class PersonService {
       Person person3 = new Person("p3",50,3000, PersonLocation.USA);
       Person testPerson = new Person("test", 30,10000,PersonLocation.India);
       List<Person> list = Arrays.asList(person1, person2, person3, testPerson);
-      System.out.println("init mthod, saving prsons, count is " + list.size());
+      log.info("init mthod, saving prsons, count is " + list.size());
       saveAllPersons(list);
     }
 
@@ -78,7 +80,7 @@ public class PersonService {
     }
 
     public List<Person> getAllPersons() {
-        System.out.println("getting all persons");
+        log.info("getting all persons");
         return personRepository.findAll();
     }
 

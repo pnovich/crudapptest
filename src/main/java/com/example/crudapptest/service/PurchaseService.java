@@ -8,14 +8,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Component
 public class PurchaseService {
+    private static final Logger log = Logger.getLogger(PurchaseService.class.getName());
     @Autowired
     PurchaseRepository purchaseRepository;
 
     public List<Purchase> getAllPurchases() {
-        System.out.println("getting all purchases");
+        log.info("getting all purchases");
         return purchaseRepository.findAll();
     }
 
