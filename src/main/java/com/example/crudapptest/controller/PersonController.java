@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+
 public class PersonController {
     private static final Logger log = Logger.getLogger(PersonController.class.getName());
     @Autowired
@@ -21,43 +22,43 @@ public class PersonController {
     @Autowired
     PurchaseService purchaseService;
 
-    @GetMapping("/person/all")
+    @GetMapping("/persons")
     public List<Person> gtAllPersons() {
         log.info("retrieving persons");
       return personService.getAllPersons();
     }
 
-    @PostMapping("/person/create")
+    @PostMapping("/persons")
     public Person createPerson(@RequestBody Person person) {
         log.info("creating new person");
         return personService.createPerson(person);
     }
 
 
-    @DeleteMapping("person/delete/{id}")
+    @DeleteMapping("persons/{id}")
     public void deleteById(@PathVariable Long id) {
         log.info("deleting new person");
         personService.deletePerson(id);
     }
 
-    @PutMapping("person/update/{id}")
+    @PutMapping("persons/{id}")
     public Person updatePerson(@PathVariable(required = false) Long id,
                                @RequestBody Person person) {
          log.info("updating person");
          return personService.updatePerson(person);
     }
 
-    @PatchMapping("person/cancel/{id}")
+    @PatchMapping("persons/cancel/{id}")
     public void cancelAllPurchasesForPerson(@PathVariable Long id) {
         //mot implmented
     }
 
-    @DeleteMapping("person/deletebyname/{name}")
+    @DeleteMapping("persons/deletebyname/{name}")
     public void deleteAllPersonsWithSomeName(@PathVariable String name) {
         personService.deletePersonsListByName(name);
     }
 
-    @PostMapping("/person/random")
+    @PostMapping("/persons/random")
     public Person createRandomePerson() {
         Person person = new Person("e",25,50,null);
         return personService.createPerson(person);

@@ -19,19 +19,19 @@ public class PurchaseController {
     @Autowired
     PersonService personService;
 
-    @GetMapping("purchase/all")
+    @GetMapping("purchases")
     public List<Purchase> findAllPurchases() {
         log.info("retrieving purchases");
         return purchaseService.getAllPurchases();
     }
 
-    @PostMapping("purchase/create")
+    @PostMapping("purchases")
     public Purchase ctreatePurchase(@RequestBody Purchase purchase) {
         log.info("creating purchase");
         return purchaseService.savePurchase(purchase);
     }
 
-    @PutMapping("purchase/update/{id}")
+    @PutMapping("purchases/{id}")
     public Purchase updatePurchase(@PathVariable(required = false) Long id,
                                    @RequestBody Purchase purchase) {
         log.info("updating purchase");
@@ -39,13 +39,13 @@ public class PurchaseController {
 
     }
 
-    @DeleteMapping("purchase/delete/{id}")
+    @DeleteMapping("purchases/{id}")
     public void deletePurchase(@PathVariable Long id) {
        log.info("deleting purchase");
        purchaseService.deletePurchase(id);
     }
 
-    @GetMapping("purchase/test/{id}")
+    @GetMapping("purchases/test/{id}")
     public Purchase createTestPurchase(
             @PathVariable Long id
     ) {
