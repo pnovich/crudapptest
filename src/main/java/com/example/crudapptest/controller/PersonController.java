@@ -5,6 +5,8 @@ import com.example.crudapptest.entity.Purchase;
 import com.example.crudapptest.service.PersonService;
 import com.example.crudapptest.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
@@ -23,45 +25,78 @@ public class PersonController {
     PurchaseService purchaseService;
 
     @GetMapping("/persons")
-    public List<Person> gtAllPersons() {
+    public ResponseEntity<List<Person>> getAllPersons() {
         log.info("retrieving persons");
-      return personService.getAllPersons();
+        try {
+            List<Person> persons = personService.getAllPersons();
+            return new ResponseEntity<>(persons, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("error on server side" + e.getMessage());
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/persons")
-    public Person createPerson(@RequestBody Person person) {
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
         log.info("creating new person");
-        return personService.createPerson(person);
+        try {
+            Person createdPerson = personService.createPerson(person);
+            return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
     @DeleteMapping("persons/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         log.info("deleting new person");
-        personService.deletePerson(id);
+        try {
+            personService.deletePerson(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("persons/{id}")
-    public Person updatePerson(@PathVariable(required = false) Long id,
+    public ResponseEntity<Person> updatePerson(@PathVariable(required = false) Long id,
                                @RequestBody Person person) {
          log.info("updating person");
-         return personService.updatePerson(person);
+         try {
+             Person updatedPerson = personService.updatePerson(person);
+             return new ResponseEntity<>(updatedPerson, HttpStatus.OK);
+         } catch (Exception e) {
+             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+         }
     }
 
     @PatchMapping("persons/cancel/{id}")
-    public void cancelAllPurchasesForPerson(@PathVariable Long id) {
-        //mot implmented
+    public ResponseEntity<HttpStatus> cancelAllPurchasesForPerson(@PathVariable Long id) {
+        //not implmented
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @DeleteMapping("persons/deletebyname/{name}")
-    public void deleteAllPersonsWithSomeName(@PathVariable String name) {
-        personService.deletePersonsListByName(name);
+    public ResponseEntity<HttpStatus> deleteAllPersonsWithSomeName(@PathVariable String name) {
+        log.info("deleting all persons");
+        try {
+            personService.deletePersonsListByName(name);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/persons/random")
-    public Person createRandomePerson() {
-        Person person = new Person("e",25,50,null);
-        return personService.createPerson(person);
+    public ResponseEntity<Person> createRandomePerson() {
+        log.info("creating random person");
+        try {
+            Person person = new Person("e",25,50,null);
+            return new ResponseEntity<>(personService.createPerson(person), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
