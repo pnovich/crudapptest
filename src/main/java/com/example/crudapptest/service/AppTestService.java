@@ -40,4 +40,12 @@ public class AppTestService {
         }
         return page.getPagePart();
     }
+
+    public void saveAll(List<AppHomePage> list) {
+        appHomePageRepository.saveAll(list);
+    }
+
+    public void deleteAll() {
+        appHomePageRepository.deleteAll();
+    }
 }
