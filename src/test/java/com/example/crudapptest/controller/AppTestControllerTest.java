@@ -1,6 +1,8 @@
 package com.example.crudapptest.controller;
 
+import com.example.crudapptest.entity.AppHomePage;
 import com.example.crudapptest.service.AppTestService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,6 +38,12 @@ class AppTestControllerTest {
     }
 
     @Test
-    void testUrl() {
+    void testUrl() throws Exception {
+        when(service.getTestMessage()).thenReturn("this is test url");
+        this.mockMvc.perform(get("/test"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("this is test url")));
+
     }
 }
