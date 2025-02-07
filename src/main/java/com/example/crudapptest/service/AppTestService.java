@@ -9,9 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Component
 public class AppTestService {
+    private static final Logger log = Logger.getLogger(PersonService.class.getName());
+
     @Autowired
     AppHomePageRepository appHomePageRepository;
 
