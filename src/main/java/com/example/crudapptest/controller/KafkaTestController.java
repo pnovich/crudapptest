@@ -1,5 +1,6 @@
 package com.example.crudapptest.controller;
 
+import com.example.crudapptest.kafka.TestMessageListner;
 import com.example.crudapptest.kafka.TestMessageProducer;
 import com.example.crudapptest.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
@@ -16,6 +18,8 @@ public class KafkaTestController {
 
     @Autowired
     private TestMessageProducer testMessageProducer;
+    @Autowired
+    private TestMessageListner testMessageListner;
     @GetMapping("/send/{message}")
     public String sendMessageToKafka(@PathVariable
                                      String message) {
@@ -29,5 +33,10 @@ public class KafkaTestController {
             log.info("error");
             return "error";
         }
+    }
+
+    @GetMapping("/list")
+    public List<String> getMessages() {
+        return testMessageListner.getAllMessages();
     }
 }
