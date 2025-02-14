@@ -1,0 +1,32 @@
+<h1>Hi!!!!!!!</h1>
+12345
+<A href="index.html"> index </A>
+<A href="list.html"> list </A>
+
+<button id="post-btn">create</button>
+<script>
+const button = document.getElementById('post-btn');
+
+button.addEventListener('click', async _ => {
+try {
+const response = await fetch('http://localhost:8080/persons', {
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    method: 'post',
+body: JSON.stringify({
+"name": "p33333",
+"age": 30,
+"money": 300,
+"location": "UA",
+"purchases": []
+})
+});
+console.log('Completed!', response);
+} catch(err) {
+console.error(`Error: ${err}`);
+}
+
+});
+</script>

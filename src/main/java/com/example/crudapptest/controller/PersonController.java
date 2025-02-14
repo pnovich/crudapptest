@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-
+@CrossOrigin(origins = "*")
 public class PersonController {
     private static final Logger log = Logger.getLogger(PersonController.class.getName());
     @Autowired

@@ -1,0 +1,41 @@
+<A href="index.html"> index </A>
+<A href="createperson.html"> create </A>
+<button id="post-btn">get</button>
+<button id="l-btn" onclick="lbutton()">l</button>
+<div class="output"></div>
+<script>
+    const l = {'a' : 'b'};
+    const output = document.querySelector('.output');
+    // output.textContent = `hello ${l}`;
+    // const lbutton = document.getElementById('l-btn');
+    lbutton = (() => {
+        console.log('click on l');
+        output.textContent = "yes";
+        return l})
+    const button = document.getElementById('post-btn');
+
+    button.addEventListener('click', async _ => {
+        try {
+            const response = await fetch('http://localhost:8080/persons', {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'get',
+            })
+                .then(async r=> {
+                    const rrr = await r.text()
+                    console.log(rrr)
+                    output.textContent = rrr;
+                    console.log('text in html output')
+
+                })
+                .catch(e=>console.error('Boo...' + e));
+            console.log('Completed!', response);
+        } catch(err) {
+            console.error(`Error: ${err}`);
+        }
+
+    });
+
+</script>
