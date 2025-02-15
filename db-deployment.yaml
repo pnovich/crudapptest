@@ -41,8 +41,21 @@ spec:
           image: postgres:17
           imagePullPolicy: IfNotPresent
           env:
+            - name: POSTGRES_DB
+              valueFrom :
+                configMapKeyRef:
+                  name: postgresql-configmap
+                  key: dbName
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: username
             - name: POSTGRES_PASSWORD
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: password
           ports:
             - containerPort: 5432
               name: postgresql

@@ -17,20 +17,31 @@ spec:
     spec:
       containers:
         - name: crudapptest1
-          image: crudapptest:3.0
+          image: crudapptest:4.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               protocol: TCP
           env:
             - name: DB_HOST
-              value: postgresql
+              valueFrom:
+                configMapKeyRef:
+                  name: postgresql-configmap
+                  key: dbHost
             - name: DB_NAME
-              value: postgres
+              valueFrom:
+                configMapKeyRef:
+                  name: postgresql-configmap
+                  key: dbName
             - name: DB_USER
-              value: postgres
+              valueFrom :
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: username
             - name: DB_PASSWORD
-              value: postgres
-
+              valueFrom :
+                secretKeyRef:
+                  name: postgresql-secrets
+                  key: password
       restartPolicy: Always
       
