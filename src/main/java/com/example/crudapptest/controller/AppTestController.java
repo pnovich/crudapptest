@@ -14,10 +14,15 @@ public class AppTestController {
     private AppTestService appTestService;
 
     private static final Logger log = Logger.getLogger(AppTestController.class.getName());
-    @GetMapping("/")
-    public String defaultString() {
-        log.info("getting default string");
-        return appTestService.getHomeMessage();
+//    @GetMapping("/")
+//    public String defaultString() {
+//        log.info("getting default string");
+//        return appTestService.getHomeMessage();
+//    }
+
+    @GetMapping("/message")
+        public String displayMessage(){
+        return "message1";
     }
 
     @GetMapping("/test")

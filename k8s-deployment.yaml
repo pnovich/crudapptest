@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crudapptest1
+  labels:
+    app: crudapptest1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: crudapptest1
+  template:
+    metadata:
+      name: crudapptest1
+      labels:
+        app: crudapptest1
+    spec:
+      containers:
+        - name: crudapptest1
+          image: crudapptest:3.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: DB_HOST
+              value: postgresql
+            - name: DB_NAME
+              value: postgres
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASSWORD
+              value: postgres
+
+      restartPolicy: Always
+      
