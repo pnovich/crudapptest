@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: crudapptest2-service
+  name: crudapptest1
 spec:
   selector:
     app: crudapptest1
@@ -10,4 +10,5 @@ spec:
       port: 8080
       targetPort: 8080
   type: NodePort
+# May be changed to type for ClusterIp using ingress
   

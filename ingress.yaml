@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservices-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: lb.com
+    - http:
+        paths:
+          - path: "/crudapp(/|$)(.*)"
+#Should b mapped to minikube ip or another in etc/hosts
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: crudapptest1
+                port:
+                  number: 8080
+#          - path: "/send(/|$)(.*)"
+#            pathType: ImplementationSpecific
+#            backend:
+#              service:
+#                name: sendingservice
+#                port:
+#                  number: 8090
+
